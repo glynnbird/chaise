@@ -5,6 +5,7 @@ export const state = () => ({
     password: process.env.COUCH_PASSWORD
   },
   dbList: [],
+  currentDB: null,
   lastDBInfo: null,
   recents: []
 })
@@ -19,6 +20,9 @@ export const mutations = {
   },
   setCouchCredentials (state, creds) {
     state.couchCredentials = creds
+  },
+  setCurrentDB (state, dbname) {
+    state.currentDB = dbname
   },
   setLastDBInfo (state, info) {
     state.lastDBInfo = info

@@ -2,14 +2,13 @@
   <div>
     <v-list>
       <v-list-item v-for="doc in docs" v-bind:key="doc.id">
-
+        <v-list-item-avatar>
+          <v-icon>mdi-file-document</v-icon>
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>
-            {{ doc.id}} rev {{ doc.value.rev | truncateRev }}
+            {{ doc.id}}
           </v-list-item-title>
-          <v-list-item-subtitle>
-            {{ doc.doc | stripDoc }}
-          </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -31,6 +30,7 @@ export default {
   async asyncData({ store, route }) {
     // get DB data
     const dbName = route.params.id
+    store.commit('cache/setCurrentDB', dbName)
     let info = null
     if (store.state.cache.lastDBInfo && store.state.cache.lastDBInfo.db_name === dbName) {
       info = store.state.cache.lastDBInfo

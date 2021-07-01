@@ -6,7 +6,6 @@
 
       <v-toolbar-title>
         {{ title }}
-        <Breadcrumb />
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
@@ -20,11 +19,11 @@
       </v-btn>
     </v-app-bar>
     <v-main>
-      <v-container>
+      <v-container fluid="false">
+        <Breadcrumb />
         <Nuxt />
       </v-container>
     </v-main>
-    
   </v-app>
 </template>
 

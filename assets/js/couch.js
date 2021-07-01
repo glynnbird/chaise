@@ -49,7 +49,7 @@ const couch = {
       },
       url: '/' + db + '/_all_docs',
       params: {
-        include_docs: true,
+        include_docs: false,
         limit: 10
       },
       withCredentials: true
