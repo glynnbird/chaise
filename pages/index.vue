@@ -33,9 +33,13 @@ export default {
   },
   async asyncData ({ store }) {
     store.commit('cache/setCurrentDB', null)
-    const response = await couch.loadDbs(store)
-    store.commit('cache/setDbList', response)
-    console.log('response', response)
+    store.commit('cache/setCurrentID', null)
+    const currentList = store.state.cache.dbList
+    if (!currentList || currentList.length === 0) {
+      const response = await couch.loadDbs(store)
+      store.commit('cache/setDbList', response)
+      console.log('response', response)
+    }
   },
   methods: {
     onClickDB: async function (db) {

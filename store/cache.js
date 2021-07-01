@@ -6,6 +6,7 @@ export const state = () => ({
   },
   dbList: [],
   currentDB: null,
+  currentID: null,
   lastDBInfo: null,
   recents: []
 })
@@ -24,12 +25,15 @@ export const mutations = {
   setCurrentDB (state, dbname) {
     state.currentDB = dbname
   },
+  setCurrentID (state, id) {
+    state.currentID = id
+  },
   setLastDBInfo (state, info) {
     state.lastDBInfo = info
   },
   addToRecents (state, db) {
     for (const d of state.recents) {
-      if (d.db_name === db.db_name) {
+      if (d === db) {
         return
       }
     }

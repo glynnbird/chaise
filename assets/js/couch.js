@@ -64,6 +64,25 @@ const couch = {
       console.error(e)
       return {}
     }
+  },
+  getDoc: async function (store, db, id) {
+    const req = {
+      method: 'get',
+      baseURL: store.state.cache.couchCredentials.url,
+      auth: {
+        username: store.state.cache.couchCredentials.username,
+        password: store.state.cache.couchCredentials.password
+      },
+      url: '/' + db + '/' + id,
+      withCredentials: true
+    }
+    try {
+      const response = await axios(req)
+      return response.data
+    } catch (e) {
+      console.error(e)
+      return {}
+    }
   }
 }
 

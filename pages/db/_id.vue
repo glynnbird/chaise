@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-list>
-      <v-list-item v-for="doc in docs" v-bind:key="doc.id">
+      <v-list-item v-for="doc in docs" v-bind:key="doc.id" @click="onClickDoc(doc.id)">
         <v-list-item-avatar>
           <v-icon>mdi-file-document</v-icon>
         </v-list-item-avatar>
@@ -10,6 +10,9 @@
             {{ doc.id}}
           </v-list-item-title>
         </v-list-item-content>
+        <v-list-item-action>
+          <v-icon>mdi-arrow-right</v-icon>
+        </v-list-item-action>
       </v-list-item>
     </v-list>
   </div>
@@ -23,31 +26,29 @@ export default {
   data() {
     return {
       dbName: '',
-      info: null,
       docs: []
     }
   },
   async asyncData({ store, route }) {
     // get DB data
     const dbName = route.params.id
+    store.commit('cache/setCurrentID', null)
     store.commit('cache/setCurrentDB', dbName)
-    let info = null
-    if (store.state.cache.lastDBInfo && store.state.cache.lastDBInfo.db_name === dbName) {
-      info = store.state.cache.lastDBInfo
-    }
-    if (!info) {
-      info = await couch.getDBInfo(store, dbName)
-    }
-    store.commit('cache/setLastDBInfo', info)
-    store.commit('cache/addToRecents', info)
+    store.commit('cache/addToRecents', dbName)
 
     // get docs
     const response = await couch.getDocs(store, dbName, null, null)
 
     return {
       dbName,
-      info,
       docs: response.rows
+    }
+  },
+  methods: {
+    onClickDoc: async function (id) {
+      const db = encodeURIComponent(this.dbName)
+      id = encodeURIComponent(id)
+      this.$router.push(`/db/${db}/${id}`)
     }
   }
 }

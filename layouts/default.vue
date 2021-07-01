@@ -19,7 +19,7 @@
       </v-btn>
     </v-app-bar>
     <v-main>
-      <v-container fluid="false">
+      <v-container fluid>
         <Breadcrumb />
         <Nuxt />
       </v-container>

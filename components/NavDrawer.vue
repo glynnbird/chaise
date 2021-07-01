@@ -32,15 +32,15 @@
     >
       <v-list-item
         v-for="item in $store.state.cache.recents"
-        :key="item.db_name"
-        @click="chooseRecent(item.db_name)"
+        :key="item"
+        @click="chooseRecent(item)"
       >
         <v-list-item-icon>
           <v-icon>mdi-database</v-icon>
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title>{{ item.db_name }}</v-list-item-title>
+          <v-list-item-title>{{ item }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
