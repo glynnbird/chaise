@@ -1,33 +1,53 @@
 <template>
-  <v-sheet
-    v-if="items.length > 1"
-    width="100%"
-    height="30">
-    <v-breadcrumbs :items="items" divider=">" nuxt></v-breadcrumbs>
-  </v-sheet>
-  
+  <span>
+    <NuxtLink to="/">{{ title }}</NuxtLink>
+    <span v-for="item in items" :key="item.to">
+      {{ separator }}
+      <v-icon v-if="item.icon">{{ item.icon }}</v-icon>
+      <NuxtLink :to="item.to">{{ item.text }}</NuxtLink>
+    </span>
+  </span>
 </template>
+<style>
+a.nuxt-link-active {
+  color:black;
+  text-decoration: none
+}
+/* exact link will show the primary color for only the exact matching link */
+a.nuxt-link-exact-active {
+  color: black;
+  text-decoration: none
+}
+</style>
 <script>
 export default {
+  props: [ 'title' ],
+  data: function () {
+    return {
+      separator: ''
+    }
+  },
   computed: {
     items: function () {
       const retval = []
       let name
-      console.log('rebuilding breadcrumb')
       // if we're not logged in, there's only one thing in the breadcrumb
-      if (this.$store.state.cache.dbList) {
-        retval.push({ to: '/', text: 'Home' })
-      }
       if (this.$store.state.cache.currentDB) {
         name = encodeURIComponent(this.$store.state.cache.currentDB)
-        retval.push({ to: `/db/${name}`, text: name, exact: true })
+        retval.push({
+          to: `/db/${name}`,
+          text: name,
+          icon: 'mdi-database'
+        })
       }
-      console.log('currentID', this.$store.state.cache.currentID)
       if (this.$store.state.cache.currentID) {
         const id = encodeURIComponent(this.$store.state.cache.currentID)
-        retval.push({ to: `/db/${name}/${id}`, text: this.$store.state.cache.currentID, exact: true })
+        retval.push({ 
+          to: `/db/${name}/${id}`,
+          text: this.$store.state.cache.currentID,
+          icon: 'mdi-file-document'
+        })
       }
-      console.log('retval', retval)
       return retval
     },
   },
