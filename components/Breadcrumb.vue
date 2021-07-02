@@ -24,28 +24,29 @@ export default {
   props: [ 'title' ],
   data: function () {
     return {
-      separator: ''
+      separator: '/'
     }
   },
   computed: {
     items: function () {
       const retval = []
       let name
-      // if we're not logged in, there's only one thing in the breadcrumb
+      // if we know the db we're dealing with
       if (this.$store.state.cache.currentDB) {
         name = encodeURIComponent(this.$store.state.cache.currentDB)
         retval.push({
           to: `/db/${name}`,
           text: name,
-          icon: 'mdi-database'
+          //icon: 'mdi-database'
         })
       }
+      // if we know the document we're dealing with
       if (this.$store.state.cache.currentID) {
         const id = encodeURIComponent(this.$store.state.cache.currentID)
         retval.push({ 
           to: `/db/${name}/${id}`,
           text: this.$store.state.cache.currentID,
-          icon: 'mdi-file-document'
+          //icon: 'mdi-file-document'
         })
       }
       return retval

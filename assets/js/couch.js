@@ -56,6 +56,7 @@ const couch = {
     }
     if (prefix) {
       req.params.startkey = JSON.stringify(prefix)
+      req.params.endkey = JSON.stringify(prefix + 'z')
     }
     try {
       const response = await axios(req)

@@ -8,6 +8,16 @@
         <Breadcrumb :title="title" />
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <!-- add document icon -->
+      <v-btn nuxt to="/doc_add" icon v-if="this.$store.state.cache.currentDB">
+        <v-icon>mdi-file-plus</v-icon>
+      </v-btn>
+      <v-btn nuxt to="/db_add" icon v-if="!this.$store.state.cache.currentDB">
+        <v-icon>mdi-database-plus</v-icon>
+      </v-btn>  
+      <v-btn nuxt to="/db_query" icon>
+        <v-icon>mdi-crosshairs-question</v-icon>
+      </v-btn>   
       <v-btn icon>
         <v-icon>mdi-cog</v-icon>
       </v-btn>
