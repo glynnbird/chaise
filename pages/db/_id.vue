@@ -1,6 +1,10 @@
 <template>
   <div>
+    <div v-if="docs.length === 0 && !filter">
+      This database currently has no data. <NuxtLink to="/doc_add">Add a document</NuxtLink>
+    </div>
     <v-text-field
+      v-if="docs.length > 0"
       prepend-icon="mdi-magnify"
       hint="filter document list by start of _id"
       v-model="filter"
@@ -9,6 +13,9 @@
       clearable
       single-line>
     </v-text-field>
+    <div v-if="docs.length === 0 && filter">
+      No matching documents
+    </div>
     <v-list>
       <v-list-item v-for="doc in docs" v-bind:key="doc.id" @click="onClickDoc(doc.id)">
         <v-list-item-avatar>

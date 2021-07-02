@@ -23,6 +23,7 @@
       </v-btn>
     </v-app-bar>
     <v-main>
+      <Alert />
       <v-container fluid>
         <Nuxt />
       </v-container>

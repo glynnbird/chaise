@@ -15,6 +15,10 @@ export const mutations = {
   setDbList (state, list) {
     state.dbList = list
   },
+  addDb (state, db) {
+    state.dbList.push(db)
+    state.dbList.sort()
+  },
   deleteDb (state, db) {
     const pos = state.dbList.indexOf(db)
     state.dbList.splice(pos, 1)

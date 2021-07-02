@@ -17,7 +17,7 @@ const couch = {
       return response.data
     } catch (e) {
       console.error(e)
-      return []
+      return null
     }
   },
   getDBInfo: async function (store, db) {
@@ -28,7 +28,7 @@ const couch = {
         username: store.state.cache.couchCredentials.username,
         password: store.state.cache.couchCredentials.password
       },
-      url: '/' + db,
+      url: '/' + encodeURIComponent(db),
       withCredentials: true
     }
     try {
@@ -36,7 +36,7 @@ const couch = {
       return response.data
     } catch (e) {
       console.error(e)
-      return {}
+      return null
     }
   },
   getDocs: async function (store, db, prefix, skip) {
@@ -47,7 +47,7 @@ const couch = {
         username: store.state.cache.couchCredentials.username,
         password: store.state.cache.couchCredentials.password
       },
-      url: '/' + db + '/_all_docs',
+      url: '/' + encodeURIComponent(db) + '/_all_docs',
       params: {
         include_docs: false,
         limit: 10
@@ -63,7 +63,7 @@ const couch = {
       return response.data
     } catch (e) {
       console.error(e)
-      return {}
+      return null
     }
   },
   getDoc: async function (store, db, id) {
@@ -74,7 +74,28 @@ const couch = {
         username: store.state.cache.couchCredentials.username,
         password: store.state.cache.couchCredentials.password
       },
-      url: '/' + db + '/' + id,
+      url: '/' + encodeURIComponent(db) + '/' + encodeURIComponent(id),
+      withCredentials: true
+    }
+    console.log(req.url)
+    try {
+      const response = await axios(req)
+      return response.data
+    } catch (e) {
+      console.error(e)
+      return null
+    }
+  },
+  putDB: async function (store, db, options) {
+    const req = {
+      method: 'put',
+      baseURL: store.state.cache.couchCredentials.url,
+      auth: {
+        username: store.state.cache.couchCredentials.username,
+        password: store.state.cache.couchCredentials.password
+      },
+      params: options || {},
+      url: '/' + encodeURIComponent(db),
       withCredentials: true
     }
     try {
@@ -82,7 +103,27 @@ const couch = {
       return response.data
     } catch (e) {
       console.error(e)
-      return {}
+      return null
+    }
+  },
+  putDoc: async function (store, db, doc) {
+    const req = {
+      method: 'post',
+      baseURL: store.state.cache.couchCredentials.url,
+      auth: {
+        username: store.state.cache.couchCredentials.username,
+        password: store.state.cache.couchCredentials.password
+      },
+      data: doc,
+      url: '/' + encodeURIComponent(db),
+      withCredentials: true
+    }
+    try {
+      const response = await axios(req)
+      return response.data
+    } catch (e) {
+      console.error(e)
+      return null
     }
   }
 }
