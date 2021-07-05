@@ -1,10 +1,7 @@
 <template>
   <div>
-    <div v-if="docs.length === 0 && !filter">
-      This database currently has no data. <NuxtLink to="/doc_add">Add a document</NuxtLink>
-    </div>
     <v-text-field
-      v-if="docs.length > 0"
+      v-if="docs.length > 0 || filter"
       prepend-icon="mdi-magnify"
       hint="filter document list by start of _id"
       v-model="filter"
@@ -13,24 +10,13 @@
       clearable
       single-line>
     </v-text-field>
+    <div v-if="docs.length === 0 && !filter">
+      This database currently has no data. <NuxtLink to="/doc_add">Add a document</NuxtLink>
+    </div>
     <div v-if="docs.length === 0 && filter">
       No matching documents
     </div>
-    <v-list>
-      <v-list-item v-for="doc in docs" v-bind:key="doc.id" @click="onClickDoc(doc.id)">
-        <v-list-item-avatar>
-          <v-icon>mdi-file-document</v-icon>
-        </v-list-item-avatar>
-        <v-list-item-content>
-          <v-list-item-title>
-            {{ doc.id}}
-          </v-list-item-title>
-        </v-list-item-content>
-        <v-list-item-action>
-          <v-icon>mdi-arrow-right</v-icon>
-        </v-list-item-action>
-      </v-list-item>
-    </v-list>
+    <DocList :docs="massagedDocs" :dbName="dbName"/>
   </div>
 </template>
 
@@ -68,11 +54,6 @@ export default {
     }
   },
   methods: {
-    onClickDoc: async function (id) {
-      const db = encodeURIComponent(this.dbName)
-      id = encodeURIComponent(id)
-      this.$router.push(`/db/${db}/${id}`)
-    },
     onClear: async function () {
       this.filter = ''
       await this.onChangeFilter()
@@ -88,6 +69,11 @@ export default {
       }
       response = await couch.getDocs(this.$store, this.dbName, this.filter, null)
       this.docs = response.rows
+    }
+  },
+  computed: {
+    massagedDocs: function () {
+      return this.docs.map((r) => { return Object.assign({ _id: r.id, _rev: r.value.rev }, r.doc) })
     }
   }
 }

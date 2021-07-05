@@ -18,6 +18,10 @@ a.nuxt-link-exact-active {
   color: black;
   text-decoration: none
 }
+.v-application a {
+  color: black;
+  text-decoration: none
+}
 </style>
 <script>
 export default {

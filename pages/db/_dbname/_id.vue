@@ -3,9 +3,19 @@
     <v-card-title>Edit Document</v-card-title>
     <v-card-text>
       <v-jsoneditor v-model="doc" :options="options" :plus="false" height="600px"></v-jsoneditor>
+      <!-- leave choir dialog --->
+      <ConfirmDialog
+        :displayDialog="displayDeleteDialog"
+        title="Are you sure?"
+        text="Confirm deletion of this document?"
+        verb="Delete"
+        @confirm="doDelete"
+        @cancel="cancelDelete"
+      />
     </v-card-text>
     <v-card-actions>
       <v-btn color="success" :disabled="saveDisabled" @click="onSave">Save</v-btn>
+      <v-btn color="error" @click="onDelete">Delete</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -35,7 +45,8 @@ export default {
       originalJson: '',
       options: {
         mode: 'code'
-      }
+      },
+      displayDeleteDialog: false
     }
   },
   asyncData: async function ({ store, route }) {
@@ -89,6 +100,27 @@ export default {
           alertMessage: 'Failed to add document'
         });
       }
+    },
+    onDelete: async function () {
+      this.displayDeleteDialog = true
+    },
+    doDelete: async function () {
+      this.displayDeleteDialog = false;
+      const response = await couch.deleteDoc(this.$store, this.dbName, this.doc)
+      if (response && response.ok) {
+        this.$store.commit('alert/insertAlert', {
+          alertType: 'success',
+          alertMessage: 'Document deleted'
+        });
+        this.$router.push(`/db/${encodeURIComponent(this.dbName)}`)
+      } else {
+        this.$store.commit('alert/insertAlert', {
+          alertMessage: 'Failed to delete document'
+        });
+      }
+    },
+    cancelDelete: function () {
+      this.displayDeleteDialog = false;
     }
   }
 }

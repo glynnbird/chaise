@@ -8,7 +8,10 @@ export const state = () => ({
   currentDB: null,
   currentID: null,
   lastDBInfo: null,
-  recents: []
+  recents: [],
+  lastSQL: null,
+  lastSQLDBName: null,
+  lastSQLResults: null
 })
 
 export const mutations = {
@@ -45,5 +48,14 @@ export const mutations = {
     if (state.recents.length > 10) {
       state.recents.splice(10)
     }
+  },
+  setLastSQL (state, sql) {
+    state.lastSQL = sql
+  },
+  setLastSQLDBName (state, dbName) {
+    state.lastSQLDBName = dbName
+  },
+  setLastSQLResults (state, results) {
+    state.lastSQLResults = results
   }
 }

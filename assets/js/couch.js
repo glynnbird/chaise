@@ -125,6 +125,70 @@ const couch = {
       console.error(e)
       return null
     }
+  },
+  deleteDoc: async function (store, db, doc) {
+    const req = {
+      method: 'delete',
+      baseURL: store.state.cache.couchCredentials.url,
+      auth: {
+        username: store.state.cache.couchCredentials.username,
+        password: store.state.cache.couchCredentials.password
+      },
+      data: doc,
+      url: `/${encodeURIComponent(db)}/${doc._id}`,
+      params: {
+        rev: doc._rev
+      },
+      withCredentials: true
+    }
+    try {
+      const response = await axios(req)
+      return response.data
+    } catch (e) {
+      console.error(e)
+      return null
+    }
+  },
+  explain: async function (store, db, query) {
+    const req = {
+      method: 'post',
+      baseURL: store.state.cache.couchCredentials.url,
+      auth: {
+        username: store.state.cache.couchCredentials.username,
+        password: store.state.cache.couchCredentials.password
+      },
+      data: query,
+      url: `/${encodeURIComponent(db)}/_explain`,
+      withCredentials: true
+    }
+    try {
+      const response = await axios(req)
+      return response.data
+    } catch (e) {
+      console.error(e)
+      return null
+    }
+  },
+  find: async function (store, db, query) {
+    console.log('_find', db, query)
+    const req = {
+      method: 'post',
+      baseURL: store.state.cache.couchCredentials.url,
+      auth: {
+        username: store.state.cache.couchCredentials.username,
+        password: store.state.cache.couchCredentials.password
+      },
+      data: query,
+      url: `/${encodeURIComponent(db)}/_find`,
+      withCredentials: true
+    }
+    try {
+      const response = await axios(req)
+      return response.data
+    } catch (e) {
+      console.error(e)
+      return null
+    }
   }
 }
 
