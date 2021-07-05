@@ -8,7 +8,7 @@
       @change="onChangeSQL"
       single-line>
     </v-text-field>
-    <DocList :docs="data.docs" :dbName="dbName" v-if="data"  showDoc="true" />
+    <DocTable :docs="data.docs" :dbName="dbName" v-if="data"  showDoc="true" />
   </div>
 </template>
 <script>
@@ -42,7 +42,7 @@ export default {
         this.dbName = this.compiled.table
         delete this.compiled.table
         this.compiled.fields = this.compiled.fields || []
-        this.compiled.limit = this.compiled.limit || 10
+        this.compiled.limit = this.compiled.limit || 20
         if (this.compiled.fields.length > 0 && !this.compiled.fields.includes('_id')) {
           this.compiled.fields.push('_id')
         }

@@ -2,7 +2,7 @@
   <div>
     <v-text-field
       v-if="docs.length > 0 || filter"
-      prepend-icon="mdi-magnify"
+      prepend-icon="mdi-filter"
       hint="filter document list by start of _id"
       v-model="filter"
       @change="onChangeFilter"
@@ -16,7 +16,7 @@
     <div v-if="docs.length === 0 && filter">
       No matching documents
     </div>
-    <DocList :docs="massagedDocs" :dbName="dbName"/>
+    <DocTable :docs="massagedDocs" :dbName="dbName" showDoc="true" />
   </div>
 </template>
 

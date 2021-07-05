@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-text-field
-      prepend-icon="mdi-magnify"
+      prepend-icon="mdi-filter"
       hint="filter database list"
       v-model="filter"
       clearable

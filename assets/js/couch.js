@@ -49,8 +49,8 @@ const couch = {
       },
       url: '/' + encodeURIComponent(db) + '/_all_docs',
       params: {
-        include_docs: false,
-        limit: 10
+        include_docs: true,
+        limit: 20
       },
       withCredentials: true
     }
