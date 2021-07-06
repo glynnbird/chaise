@@ -1,15 +1,15 @@
 <template>
   <v-navigation-drawer v-model="show" app>
-    <v-list-item>
+    <v-list-item v-if="$store.state.session.currentService">
       <v-list-item-avatar>
-        <v-icon>mdi-account</v-icon>
+        <v-icon>mdi-cloud</v-icon>
       </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title class="text-h6">
-          glynnbird
+          {{ $store.state.session.currentService.name }}
         </v-list-item-title>
         <v-list-item-subtitle>
-          Logged In
+          {{ $store.state.session.currentService.host }}
         </v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
@@ -20,6 +20,14 @@
       <v-list-item-content>
           <v-list-item-title>
             Home
+          </v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
+    
+    <v-list-item @click="onSettings">
+      <v-list-item-content>
+          <v-list-item-title>
+            Settings
           </v-list-item-title>
       </v-list-item-content>
     </v-list-item>
@@ -69,6 +77,9 @@ export default {
     },
     onHome: function () {
       this.$router.push('/')
+    },
+    onSettings: function () {
+      this.$router.push('/settings')
     }
   }
 }

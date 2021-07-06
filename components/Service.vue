@@ -1,0 +1,20 @@
+<template>
+  <v-card :color="selected ? 'blue-grey lighten-4' : 'white'" style="margin-bottom:10px">
+   <v-card-title>{{ name }}</v-card-title>
+   <v-card-subtitle v-if="selected">This is the currently selected service</v-card-subtitle>
+   <v-card-text>
+     {{ host }}
+   </v-card-text>
+   <v-card-actions>
+     <v-btn @click="$emit('select', id)">Select</v-btn>
+   </v-card-actions>
+  </v-card>
+</template>
+<script>
+export default {
+  props: ['name', 'host', 'selected', 'id'],
+  data: function () {
+    return {}
+  },
+}
+</script>

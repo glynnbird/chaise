@@ -4,10 +4,10 @@ const couch = {
   loadDbs: async function (store) {
     const req = {
       method: 'get',
-      baseURL: store.state.cache.couchCredentials.url,
+      baseURL: store.state.session.currentService.host,
       auth: {
-        username: store.state.cache.couchCredentials.username,
-        password: store.state.cache.couchCredentials.password
+        username: store.state.session.currentService.username,
+        password: store.state.session.currentService.password
       },
       url: '/_all_dbs',
       withCredentials: true
@@ -23,10 +23,10 @@ const couch = {
   getDBInfo: async function (store, db) {
     const req = {
       method: 'get',
-      baseURL: store.state.cache.couchCredentials.url,
+      baseURL: store.state.session.currentService.host,
       auth: {
-        username: store.state.cache.couchCredentials.username,
-        password: store.state.cache.couchCredentials.password
+        username: store.state.session.currentService.username,
+        password: store.state.session.currentService.password
       },
       url: '/' + encodeURIComponent(db),
       withCredentials: true
@@ -42,10 +42,10 @@ const couch = {
   getDocs: async function (store, db, prefix, skip) {
     const req = {
       method: 'get',
-      baseURL: store.state.cache.couchCredentials.url,
+      baseURL: store.state.session.currentService.host,
       auth: {
-        username: store.state.cache.couchCredentials.username,
-        password: store.state.cache.couchCredentials.password
+        username: store.state.session.currentService.username,
+        password: store.state.session.currentService.password
       },
       url: '/' + encodeURIComponent(db) + '/_all_docs',
       params: {
@@ -69,10 +69,10 @@ const couch = {
   getDoc: async function (store, db, id) {
     const req = {
       method: 'get',
-      baseURL: store.state.cache.couchCredentials.url,
+      baseURL: store.state.session.currentService.host,
       auth: {
-        username: store.state.cache.couchCredentials.username,
-        password: store.state.cache.couchCredentials.password
+        username: store.state.session.currentService.username,
+        password: store.state.session.currentService.password
       },
       url: '/' + encodeURIComponent(db) + '/' + encodeURIComponent(id),
       withCredentials: true
@@ -89,10 +89,10 @@ const couch = {
   putDB: async function (store, db, options) {
     const req = {
       method: 'put',
-      baseURL: store.state.cache.couchCredentials.url,
+      baseURL: store.state.session.currentService.host,
       auth: {
-        username: store.state.cache.couchCredentials.username,
-        password: store.state.cache.couchCredentials.password
+        username: store.state.session.currentService.username,
+        password: store.state.session.currentService.password
       },
       params: options || {},
       url: '/' + encodeURIComponent(db),
@@ -109,10 +109,10 @@ const couch = {
   putDoc: async function (store, db, doc) {
     const req = {
       method: 'post',
-      baseURL: store.state.cache.couchCredentials.url,
+      baseURL: store.state.session.currentService.host,
       auth: {
-        username: store.state.cache.couchCredentials.username,
-        password: store.state.cache.couchCredentials.password
+        username: store.state.session.currentService.username,
+        password: store.state.session.currentService.password
       },
       data: doc,
       url: '/' + encodeURIComponent(db),
@@ -129,10 +129,10 @@ const couch = {
   deleteDoc: async function (store, db, doc) {
     const req = {
       method: 'delete',
-      baseURL: store.state.cache.couchCredentials.url,
+      baseURL: store.state.session.currentService.host,
       auth: {
-        username: store.state.cache.couchCredentials.username,
-        password: store.state.cache.couchCredentials.password
+        username: store.state.session.currentService.username,
+        password: store.state.session.currentService.password
       },
       data: doc,
       url: `/${encodeURIComponent(db)}/${doc._id}`,
@@ -152,10 +152,10 @@ const couch = {
   explain: async function (store, db, query) {
     const req = {
       method: 'post',
-      baseURL: store.state.cache.couchCredentials.url,
+      baseURL: store.state.session.currentService.host,
       auth: {
-        username: store.state.cache.couchCredentials.username,
-        password: store.state.cache.couchCredentials.password
+        username: store.state.session.currentService.username,
+        password: store.state.session.currentService.password
       },
       data: query,
       url: `/${encodeURIComponent(db)}/_explain`,
@@ -173,10 +173,10 @@ const couch = {
     console.log('_find', db, query)
     const req = {
       method: 'post',
-      baseURL: store.state.cache.couchCredentials.url,
+      baseURL: store.state.session.currentService.host,
       auth: {
-        username: store.state.cache.couchCredentials.username,
-        password: store.state.cache.couchCredentials.password
+        username: store.state.session.currentService.username,
+        password: store.state.session.currentService.password
       },
       data: query,
       url: `/${encodeURIComponent(db)}/_find`,

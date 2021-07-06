@@ -1,9 +1,4 @@
 export const state = () => ({
-  couchCredentials: {
-    url: process.env.COUCH_URL,
-    username: process.env.COUCH_USERNAME,
-    password: process.env.COUCH_PASSWORD
-  },
   dbList: [],
   currentDB: null,
   currentID: null,
@@ -15,6 +10,13 @@ export const state = () => ({
 })
 
 export const mutations = {
+  reset (state) {
+    state.dbList = []
+    state.currentDB = null
+    state.currentID = null
+    state.lastDBInfo = null
+    state.recents = []
+  },
   setDbList (state, list) {
     state.dbList = list
   },
@@ -25,9 +27,6 @@ export const mutations = {
   deleteDb (state, db) {
     const pos = state.dbList.indexOf(db)
     state.dbList.splice(pos, 1)
-  },
-  setCouchCredentials (state, creds) {
-    state.couchCredentials = creds
   },
   setCurrentDB (state, dbname) {
     state.currentDB = dbname

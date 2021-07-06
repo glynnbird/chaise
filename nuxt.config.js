@@ -40,6 +40,10 @@ export default {
     '@nuxtjs/vuetify'
   ],
 
+  router: {
+    middleware: ['checkSession']
+  },
+
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
@@ -68,8 +72,6 @@ export default {
   },
 
   env: {
-    COUCH_URL: process.env.COUCH_URL,
-    COUCH_USERNAME: process.env.COUCH_USERNAME,
-    COUCH_PASSWORD: process.env.COUCH_PASSWORD
+
   }
 }

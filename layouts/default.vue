@@ -1,11 +1,11 @@
 <template>
   <v-app>
     <NavDrawer ref="drawer" />
-    <v-app-bar app dense>
+    <v-app-bar app dense v-if="$store.state.session.currentService">
       <v-app-bar-nav-icon @click.stop="onClickNavbarReveal"></v-app-bar-nav-icon>
 
       <v-toolbar-title>
-        <Breadcrumb :title="title" />
+        <Breadcrumb :title="$store.state.session.currentService.name" />
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <!-- add document icon -->
@@ -18,7 +18,7 @@
       <v-btn nuxt to="/db_query" icon>
         <v-icon>mdi-crosshairs-question</v-icon>
       </v-btn>   
-      <v-btn icon>
+      <v-btn nuxt to="/settings" icon>
         <v-icon>mdi-cog</v-icon>
       </v-btn>
     </v-app-bar>
@@ -34,9 +34,7 @@
 <script>
 export default {
   data () {
-    return {
-      title: 'Chaise'
-    }
+    return { }
   },
   methods: {
     onClickNavbarReveal: function () {
