@@ -39,7 +39,10 @@ const couch = {
       return null
     }
   },
-  getDocs: async function (store, db, prefix, skip) {
+  getDocs: async function (store, db, prefix, page) {
+    if (!page) {
+      page = 1
+    }
     const req = {
       method: 'get',
       baseURL: store.state.session.currentService.host,
@@ -50,6 +53,7 @@ const couch = {
       url: '/' + encodeURIComponent(db) + '/_all_docs',
       params: {
         include_docs: true,
+        skip: (page - 1) * 20,
         limit: 20
       },
       withCredentials: true

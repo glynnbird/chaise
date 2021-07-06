@@ -1,15 +1,22 @@
 <template>
   <div>
-    <v-text-field
-      v-if="docs.length > 0 || filter"
-      prepend-icon="mdi-filter"
-      hint="filter document list by start of _id"
-      v-model="filter"
-      @change="onChangeFilter"
-      @click:clear="onClear"
-      clearable
-      single-line>
-    </v-text-field>
+    <v-toolbar>
+      <v-text-field
+        v-if="docs.length > 0 || filter"
+        prepend-icon="mdi-filter"
+        hint="filter document list by start of _id"
+        v-model="filter"
+        @change="onChangeFilter"
+        @click:clear="onClear"
+        clearable
+        single-line>
+      </v-text-field>
+      <v-spacer></v-spacer>
+      <v-btn @click="prev" :disabled="page < 2">Prev</v-btn>
+      <v-btn disabled>{{ page }}</v-btn>
+      <v-btn @click="next" :disabled="docs.length < 20">Next</v-btn>
+    </v-toolbar>
+    <br />
     <div v-if="docs.length === 0 && !filter">
       This database currently has no data. <NuxtLink to="/doc_add">Add a document</NuxtLink>
     </div>
@@ -17,6 +24,7 @@
       No matching documents
     </div>
     <DocTable :docs="massagedDocs" :dbName="dbName" showDoc="true" />
+    <Busy :isBusy="busy" />
   </div>
 </template>
 
@@ -29,7 +37,9 @@ export default {
     return {
       dbName: '',
       docs: [],
-      filter: ''
+      filter: '',
+      page: 1,
+      busy: false
     }
   },
   async asyncData({ store, route }) {
@@ -43,14 +53,15 @@ export default {
     
     // get filter from query string
     const filter = route.query.filter || ''
+    const page = route.query.page || 1
 
-    // get docs
-    const response = await couch.getDocs(store, dbName, filter, null)
+    const response = await couch.getDocs(store, dbName, filter, page)
 
     return {
       dbName,
+      filter,
       docs: response.rows,
-      filter
+      page
     }
   },
   methods: {
@@ -60,15 +71,23 @@ export default {
     },
     onChangeFilter: async function () {
       let response
-      console.log('onChangeFilter', this.filter)
-      console.log(this.$route)
       if (this.filter) {
-        this.$router.push({ path: this.$route.path, query: {filter: this.filter} })
+        this.$router.push({ path: this.$route.path, query: { filter: this.filter, page: this.page } })
       } else {
-        this.$router.push({ path: this.$route.path, query: {}})
+        this.$router.push({ path: this.$route.path, query: { page: this.page }})
       }
-      response = await couch.getDocs(this.$store, this.dbName, this.filter, null)
+      this.busy = true
+      response = await couch.getDocs(this.$store, this.dbName, this.filter, this.page)
+      this.busy = false
       this.docs = response.rows
+    },
+    next: async function () {
+      this.page++
+      this.onChangeFilter()
+    },
+    prev: async function () {
+      this.page--
+      this.onChangeFilter()
     }
   },
   computed: {
