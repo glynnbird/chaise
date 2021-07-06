@@ -13,6 +13,16 @@ export const mutations = {
     state.services.push(service)
     localstorage.saveProfile({ services: state.services })
   },
+  deleteService (state, id) {
+    for (const k in state.services) {
+      const service = state.services[k]
+      if (service.id === id) {
+        state.services.splice(k, 1)
+        localstorage.saveProfile({ services: state.services })
+        break
+      }
+    }
+  },
   deleteAllServices (state) {
     state.services = []
     localstorage.deleteProfile()

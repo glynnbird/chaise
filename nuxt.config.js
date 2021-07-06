@@ -41,6 +41,7 @@ export default {
   ],
 
   router: {
+    base: '/chaise',
     middleware: ['checkSession']
   },
 

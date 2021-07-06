@@ -15,7 +15,8 @@
       :host="service.host"
       :id="service.id"
       :selected="($store.state.session.currentService && service.id === $store.state.session.currentService.id)"
-      @select="chooseService" />
+      @select="chooseService"
+      @delete="deleteService" />
     <br />
     <v-btn v-if="!showAddForm" @click="revealAddForm">Add Service</v-btn>
     <v-card v-if="showAddForm">
@@ -112,17 +113,21 @@ export default {
       }
     },
     chooseService: function(id) {
-      console.log('choose service', id)
       for(const service of this.services) {
-        console.log('comparing', service.id, id)
         if (service.id === id) {
-          console.log('setting current service', service)
           this.$store.commit('session/setCurrentService', service)
           this.$store.commit('cache/reset')
           this.$router.push('/')
           break
         }
       }
+    },
+    deleteService: function (id) {
+      if (id === this.$store.state.session.currentService) {
+        this.$store.commit('cache/reset')
+        this.$store.commit('session/currentService', null)
+      }
+      this.$store.commit('session/deleteService', id)
     }
   }
 }

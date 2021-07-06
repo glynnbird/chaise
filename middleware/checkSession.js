@@ -4,7 +4,6 @@ export default async function ({ store, redirect, route }) {
   // make sure that if localstorage says we're logged in that
   // the stored data makes it to the profile
   const profile = localstorage.loadProfile()
-  console.log('profile', profile)
   if (profile !== null) {
     store.commit('session/loadServices', profile.services)
   }
