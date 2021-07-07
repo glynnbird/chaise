@@ -39,7 +39,6 @@ export default {
     }
   },
   asyncData: async function( {store}) {
-    console.log('asyncData', store.state.cache.lastSQL)
     const sql = store.state.cache.lastSQL
     const data = store.state.cache.lastSQLResults
     const dbName = store.state.cache.lastSQLDBName
@@ -47,7 +46,6 @@ export default {
   },
 
   mounted: async function () {
-    console.log('mounted!')
     if (this.data === null) {
       await this.onResetSQL()
     }

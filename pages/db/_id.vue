@@ -48,8 +48,6 @@ export default {
     }
   },
   async asyncData({ store, route }) {
-
-    console.log('incoming!', route.query)
     // get DB data
     const dbName = route.params.id
     store.commit('cache/setCurrentID', null)

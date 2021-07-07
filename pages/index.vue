@@ -44,7 +44,6 @@ export default {
     if (!currentList || currentList.length === 0) {
       const response = await couch.loadDbs(store)
       store.commit('cache/setDbList', response)
-      console.log('response', response)
     }
   },
   methods: {

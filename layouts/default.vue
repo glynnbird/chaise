@@ -39,7 +39,6 @@ export default {
   methods: {
     onClickNavbarReveal: function () {
       this.$refs.drawer.show = !this.$refs.drawer.show
-      console.log(this.$refs.drawer.show)
     }
   }
 }

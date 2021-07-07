@@ -55,7 +55,6 @@ export default {
   },
   methods: {
     onCreateDatbase: async function () {
-      console.log('create database', this.name, this.partitioned)
       const response = await couch.putDB(this.$store, this.name, { partitioned: this.partitioned })
       if (response && response.ok) {
         this.$store.commit('cache/addDb', this.name)

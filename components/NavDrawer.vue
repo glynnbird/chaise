@@ -74,7 +74,6 @@ export default {
     }
   },
   async asyncData ({ store }) {
-    console.log('store', store.state.cache.dbList)
     return {
       items: store.state.cache.dbList
     }

@@ -66,7 +66,6 @@ const couch = {
       const response = await axios(req)
       return response.data
     } catch (e) {
-      console.error(e)
       return null
     }
   },
@@ -81,12 +80,10 @@ const couch = {
       url: '/' + encodeURIComponent(db) + '/' + encodeURIComponent(id),
       withCredentials: true
     }
-    console.log(req.url)
     try {
       const response = await axios(req)
       return response.data
     } catch (e) {
-      console.error(e)
       return null
     }
   },
@@ -106,7 +103,6 @@ const couch = {
       const response = await axios(req)
       return response.data
     } catch (e) {
-      console.error(e)
       return null
     }
   },
@@ -126,7 +122,6 @@ const couch = {
       const response = await axios(req)
       return response.data
     } catch (e) {
-      console.error(e)
       return null
     }
   },
@@ -149,7 +144,6 @@ const couch = {
       const response = await axios(req)
       return response.data
     } catch (e) {
-      console.error(e)
       return null
     }
   },
@@ -169,12 +163,10 @@ const couch = {
       const response = await axios(req)
       return response.data
     } catch (e) {
-      console.error(e)
       return null
     }
   },
   find: async function (store, db, query) {
-    console.log('_find', db, query)
     const req = {
       method: 'post',
       baseURL: store.state.session.currentService.host,
@@ -190,7 +182,6 @@ const couch = {
       const response = await axios(req)
       return response.data
     } catch (e) {
-      console.error(e)
       return null
     }
   }

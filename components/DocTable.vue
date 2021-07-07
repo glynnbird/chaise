@@ -37,7 +37,6 @@ export default {
         }
       }
       // convert set to array
-      console.log('keys', [...uniqueKeys])
       return [...uniqueKeys].map((k) => { return { text: k, value: k }})
     }
   }

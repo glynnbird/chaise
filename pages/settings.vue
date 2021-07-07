@@ -83,7 +83,6 @@ export default {
     };
   },
   asyncData: async function ({ store }) {
-    console.log('asyncdata', store.state.session.services)
     return {
       services: store.state.session.services || []
     }
@@ -97,8 +96,6 @@ export default {
       this.showAddForm = true
     },
     onSave: function () {
-      console.log('save!')
-      console.log('this.service', this.services)
       const newService = {
         id: kuuid.ids(),
         name: this.newServiceName,
