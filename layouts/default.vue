@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <NavDrawer ref="drawer" />
-    <v-app-bar app dense v-if="$store.state.session.currentService">
+    <v-app-bar dark app dense v-if="$store.state.session.currentService">
       <v-app-bar-nav-icon @click.stop="onClickNavbarReveal"></v-app-bar-nav-icon>
 
       <v-toolbar-title>
@@ -9,14 +9,14 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <!-- add document icon -->
-      <v-btn nuxt to="/doc_add" icon v-if="this.$store.state.cache.currentDB">
+      <v-btn nuxt to="/doc_add" icon v-if="this.$store.state.cache.currentDB && !this.$store.state.cache.currentID">
         <v-icon>mdi-file-plus</v-icon>
       </v-btn>
       <v-btn nuxt to="/db_add" icon v-if="!this.$store.state.cache.currentDB">
         <v-icon>mdi-database-plus</v-icon>
       </v-btn>  
       <v-btn nuxt to="/db_query" icon>
-        <v-icon>mdi-crosshairs-question</v-icon>
+        <v-icon>mdi-database-search</v-icon>
       </v-btn>   
       <v-btn nuxt to="/settings" icon>
         <v-icon>mdi-cog</v-icon>

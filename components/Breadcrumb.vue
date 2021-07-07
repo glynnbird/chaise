@@ -10,16 +10,16 @@
 </template>
 <style>
 a.nuxt-link-active {
-  color:black;
+  color:white;
   text-decoration: none
 }
 /* exact link will show the primary color for only the exact matching link */
 a.nuxt-link-exact-active {
-  color: black;
+  color: white;
   text-decoration: none
 }
 .v-application a {
-  color: black;
+  color:white;
   text-decoration: none
 }
 </style>
