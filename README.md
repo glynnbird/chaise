@@ -1,6 +1,27 @@
 # chaise
 
-## Build Setup
+Chaise is a dashboard for Apache CouchDB that allows multiple CouchDB services to be managed from the same place.
+
+Use it: https://glynnbird.github.io/chaise/
+
+## Features
+
+- Configure any number of CouchDB/Cloudant services
+- Switch between configured services at will
+- See list of databases (filterable)
+- See list of documents in a database (filter by _id) with pagination
+- Add/edit/delete documents
+- Query a database using simple SQL statements
+
+## How does it work?
+
+Chaise is a static web app hosted on GitHub Pages. It loads into your browser and stores its "state" (i.e. the list of configured services) in your browser's local storage, so your credentials are store on your machine.
+
+The target CouchDB service must have "CORS" enabled.
+
+## Development
+
+Clone this repo.
 
 ```bash
 # install dependencies
@@ -8,16 +29,7 @@ $ npm install
 
 # serve with hot reload at localhost:3000
 $ npm run dev
-
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
 ```
-
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
 
 ## Special Directories
 
