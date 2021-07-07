@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-toolbar color="grey lighten-3">
+    <v-toolbar color="blue-grey lighten-5">
       <v-text-field
         prepend-icon="mdi-filter"
         hint="filter database list"

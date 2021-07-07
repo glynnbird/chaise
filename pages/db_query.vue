@@ -46,7 +46,7 @@ export default {
   },
 
   mounted: async function () {
-    if (this.data === null) {
+    if (this.data === null && this.sql) {
       await this.onResetSQL()
     }
   },
@@ -73,7 +73,7 @@ export default {
         this.compiled.fields = this.compiled.fields || []
         this.compiled.limit = this.compiled.limit || 20
         if (this.compiled.fields.length > 0 && !this.compiled.fields.includes('_id')) {
-          this.compiled.fields.push('_id')
+          this.compiled.fields.unshift('_id')
         }
         if (this.bookmark) {
           this.compiled.bookmark = this.bookmark

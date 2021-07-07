@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <NavDrawer ref="drawer" />
-    <v-app-bar dark app dense v-if="$store.state.session.currentService">
+    <v-app-bar color="blue-grey lighten-4" app dense v-if="$store.state.session.currentService">
       <v-app-bar-nav-icon @click.stop="onClickNavbarReveal"></v-app-bar-nav-icon>
 
       <v-toolbar-title>

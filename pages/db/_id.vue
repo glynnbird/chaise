@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-toolbar color="grey lighten-3">
+    <v-toolbar color="blue-grey lighten-5">
       <v-text-field
         v-if="docs.length > 0 || filter"
         prepend-icon="mdi-filter"
