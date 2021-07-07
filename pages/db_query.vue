@@ -45,6 +45,13 @@ export default {
     const dbName = store.state.cache.lastSQLDBName
     return { sql, data, dbName }
   },
+
+  mounted: async function () {
+    console.log('mounted!')
+    if (this.data === null) {
+      await this.onResetSQL()
+    }
+  },
   methods: {
     next: async function () {
       this.page++

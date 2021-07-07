@@ -1,12 +1,14 @@
 <template>
   <div>
-    <v-text-field
-      prepend-icon="mdi-filter"
-      hint="filter database list"
-      v-model="filter"
-      clearable
-      single-line>
-    </v-text-field>
+    <v-toolbar color="grey lighten-3">
+      <v-text-field
+        prepend-icon="mdi-filter"
+        hint="filter database list"
+        v-model="filter"
+        clearable
+        single-line>
+      </v-text-field>
+    </v-toolbar>
     <v-list>
       <v-list-item v-for="db in filteredDBList" v-bind:key="db" @click="onClickDB(db)">
         <v-list-item-avatar>

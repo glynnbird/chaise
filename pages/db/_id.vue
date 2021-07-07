@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-toolbar>
+    <v-toolbar color="grey lighten-3">
       <v-text-field
         v-if="docs.length > 0 || filter"
         prepend-icon="mdi-filter"
@@ -11,7 +11,9 @@
         clearable
         single-line>
       </v-text-field>
+
       <v-spacer></v-spacer>
+      <v-btn small @click="sql">SQL</v-btn>
       <v-btn small icon @click="prev" :disabled="page < 2"><v-icon>mdi-chevron-left</v-icon></v-btn>
       <v-btn small outlined disabled>{{ page }}</v-btn>
       <v-btn small icon @click="next" :disabled="docs.length < 20"><v-icon>mdi-chevron-right</v-icon></v-btn>
@@ -91,6 +93,12 @@ export default {
     prev: async function () {
       this.page--
       this.onChangeFilter()
+    },
+    sql: function () {
+      this.$store.commit('cache/setLastSQL', `SELECT * FROM ${this.dbName}`)
+      this.$store.commit('cache/setLastSQLResults', null)
+      this.$store.commit('cache/setLastSQLDBName', this.dbName)
+      this.$router.push('/db_query')
     }
   },
   computed: {
