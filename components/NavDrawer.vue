@@ -32,6 +32,14 @@
       </v-list-item-content>
     </v-list-item>
 
+    <v-list-item @click="onAbout">
+      <v-list-item-content>
+          <v-list-item-title>
+            About
+          </v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
+
     <v-divider></v-divider>
     <v-subheader v-if="$store.state.cache.recents.length > 0">Recents</v-subheader>
     <v-list
@@ -80,6 +88,9 @@ export default {
     },
     onSettings: function () {
       this.$router.push('/settings')
+    },
+    onAbout: function () {
+      this.$router.push('/about')
     }
   }
 }

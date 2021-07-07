@@ -39,6 +39,7 @@ export default {
       options: {
         mode: 'code',
         onChangeText: this.onChangeText,
+        mainMenuBar: false
       }
     }
   },

@@ -44,7 +44,8 @@ export default {
       doc: null,
       originalJson: '',
       options: {
-        mode: 'code'
+        mode: 'code',
+        mainMenuBar: false
       },
       displayDeleteDialog: false
     }

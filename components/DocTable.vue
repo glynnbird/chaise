@@ -5,6 +5,7 @@
     :items-per-page="itemsPerPage"
     class="elevation-1"
     hide-default-footer
+    disable-sort
     dense
     @click:row="onClickDoc"
   ></v-data-table>

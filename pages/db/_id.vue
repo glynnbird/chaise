@@ -6,15 +6,18 @@
         prepend-icon="mdi-filter"
         hint="filter document list by start of _id"
         v-model="filter"
-        @change="onChangeFilter"
+        @change="page=1; onChangeFilter()"
         @click:clear="onClear"
         clearable
         single-line>
       </v-text-field>
       <v-spacer></v-spacer>
-      <v-btn @click="prev" :disabled="page < 2">Prev</v-btn>
-      <v-btn disabled>{{ page }}</v-btn>
-      <v-btn @click="next" :disabled="docs.length < 20">Next</v-btn>
+      <v-btn small icon @click="prev" :disabled="page < 2"><v-icon>mdi-chevron-left</v-icon></v-btn>
+      <v-btn small outlined disabled>{{ page }}</v-btn>
+      <v-btn small icon @click="next" :disabled="docs.length < 20"><v-icon>mdi-chevron-right</v-icon></v-btn>
+      &nbsp;
+      <v-btn small icon @click="onChangeFilter"><v-icon>mdi-refresh</v-icon></v-btn>
+      
     </v-toolbar>
     <br />
     <div v-if="docs.length === 0 && !filter">
