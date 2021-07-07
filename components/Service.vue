@@ -3,7 +3,12 @@
    <v-card-title>{{ name }}</v-card-title>
    <v-card-subtitle v-if="selected">This is the currently selected service</v-card-subtitle>
    <v-card-text>
-     {{ host }}
+     <div>
+       Host: {{ host }}
+     </div>
+     <div>
+       Read only: {{ readonly }}
+     </div>
    </v-card-text>
    <v-card-actions>
      <v-btn :disabled="selected" color="success" @click="$emit('select', id)">Select</v-btn>
@@ -13,7 +18,7 @@
 </template>
 <script>
 export default {
-  props: ['name', 'host', 'selected', 'id'],
+  props: ['name', 'host', 'selected', 'id', 'readonly'],
   data: function () {
     return {}
   },

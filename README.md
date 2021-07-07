@@ -12,6 +12,7 @@ Use it: https://glynnbird.github.io/chaise/
 - See list of documents in a database (filter by _id) with pagination
 - Add/edit/delete documents
 - Query a database using simple SQL statements
+- Configure a CouchDB service as "read only" and all add/edit/delete functions are disabled
 
 ## How does it work?
 

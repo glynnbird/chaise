@@ -9,10 +9,10 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <!-- add document icon -->
-      <v-btn nuxt to="/doc_add" icon v-if="this.$store.state.cache.currentDB && !this.$store.state.cache.currentID">
+      <v-btn nuxt to="/doc_add" icon v-if="!$store.state.session.currentService.readonly && $store.state.cache.currentDB && !$store.state.cache.currentID">
         <v-icon>mdi-file-plus</v-icon>
       </v-btn>
-      <v-btn nuxt to="/db_add" icon v-if="!this.$store.state.cache.currentDB">
+      <v-btn nuxt to="/db_add" icon v-if="!$store.state.session.currentService.readonly && !$store.state.cache.currentDB">
         <v-icon>mdi-database-plus</v-icon>
       </v-btn>  
       <v-btn nuxt to="/db_query" icon>

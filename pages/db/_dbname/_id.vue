@@ -1,9 +1,9 @@
 <template>
   <v-card>
-    <v-card-title>Edit Document</v-card-title>
+    <v-card-title>{{ title }}</v-card-title>
     <v-card-text>
-      <v-jsoneditor v-model="doc" :options="options" :plus="false" height="600px"></v-jsoneditor>
-      <!-- leave choir dialog --->
+      <v-jsoneditor v-if="!readonly" v-model="doc" :options="options" :plus="false" height="600px"></v-jsoneditor>
+      <pre v-if="readonly">{{ JSON.stringify(doc, null, '  ') }}</pre>
       <ConfirmDialog
         :displayDialog="displayDeleteDialog"
         title="Are you sure?"
@@ -14,8 +14,8 @@
       />
     </v-card-text>
     <v-card-actions>
-      <v-btn color="success" :disabled="saveDisabled" @click="onSave">Save</v-btn>
-      <v-btn color="error" @click="onDelete">Delete</v-btn>
+      <v-btn color="success" :disabled="saveDisabled || readonly" @click="onSave">Save</v-btn>
+      <v-btn color="error" :disabled="readonly" @click="onDelete">Delete</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -39,6 +39,7 @@ import couch from "~/assets/js/couch"
 export default {
   data: function () {
     return {
+      title: 'title',
       dbName: null,
       id: null,
       doc: null,
@@ -47,7 +48,8 @@ export default {
         mode: 'code',
         mainMenuBar: false
       },
-      displayDeleteDialog: false
+      displayDeleteDialog: false,
+      readonly: false
     }
   },
   asyncData: async function ({ store, route }) {
@@ -61,11 +63,21 @@ export default {
     const doc = await couch.getDoc(store, dbName, id)
     const originalJson = JSON.stringify(doc)
     store.commit('cache/setCurrentID', id)
+
+    // check whether current service is readonly
+    const readonly = !!store.state.session.currentService.readonly
+    let title = 'Edit document'
+    if (readonly) {
+      title = 'View document'
+    }
+
     return {
       dbName,
       id,
       doc,
-      originalJson
+      originalJson,
+      readonly,
+      title
     }
   },
   computed: {
