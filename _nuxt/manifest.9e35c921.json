@@ -1,7 +1,7 @@
 {
   "name": "chaise",
   "short_name": "chaise",
-  "description": "## Build Setup",
+  "description": "Chaise is a dashboard for Apache CouchDB that allows multiple CouchDB services to be managed from the same place.",
   "icons": [
     {
       "src": "/chaise/_nuxt/icons/icon_64x64.e3e9fb.png",
