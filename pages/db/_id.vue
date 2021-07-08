@@ -13,6 +13,7 @@
       </v-text-field>
 
       <v-spacer></v-spacer>
+      <v-btn small @click="ddocs">Design Docs</v-btn> &nbsp;
       <v-btn small @click="sql">SQL</v-btn>
       <v-btn small icon @click="prev" :disabled="page < 2"><v-icon>mdi-chevron-left</v-icon></v-btn>
       <v-btn small outlined disabled>{{ page }}</v-btn>
@@ -97,6 +98,10 @@ export default {
       this.$store.commit('cache/setLastSQLResults', null)
       this.$store.commit('cache/setLastSQLDBName', this.dbName)
       this.$router.push('/db_query')
+    },
+    ddocs: function () {
+      this.filter = '_design/'
+      this.onChangeFilter()
     }
   },
   computed: {

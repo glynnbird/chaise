@@ -10,6 +10,8 @@
         single-line>
       </v-text-field>
       <v-spacer />
+      <v-btn small @click="alldocs">All Docs</v-btn>
+      &nbsp;
       <v-btn small outlined disabled>{{ page }}</v-btn>
       <v-btn small icon @click="next" :disabled="!data || data.docs.length < 20"><v-icon>mdi-chevron-right</v-icon></v-btn>
       &nbsp;
@@ -51,6 +53,9 @@ export default {
     }
   },
   methods: {
+    alldocs: async function () {
+      this.$router.push(`/db/${this.dbName}`)
+    },
     next: async function () {
       this.page++
       this.bookmark = this.nextBookmark

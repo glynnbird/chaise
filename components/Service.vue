@@ -6,7 +6,7 @@
     </v-card-title>
    <v-card-subtitle>{{ host }}</v-card-subtitle>
    <v-card-actions>
-     <v-btn :disabled="selected" color="success" @click="$emit('select', id)">Select</v-btn>
+     <v-btn color="success" @click="$emit('select', id)">Select</v-btn>
      <v-btn :disabled="selected" color="error" @click="$emit('delete', id)">Delete</v-btn>
    </v-card-actions>
   </v-card>
