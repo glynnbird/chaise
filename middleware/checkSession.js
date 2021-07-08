@@ -9,7 +9,8 @@ export default async function ({ store, redirect, route }) {
   }
 
   if (!profile || store.state.session.currentService === null) {
-    if (route.path !== '/settings') {
+    const allowedRoutes = ['/settings', '/about']
+    if (!allowedRoutes.includes(route.path)) {
       redirect('/settings')
     }
   }

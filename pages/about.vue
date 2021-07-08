@@ -23,5 +23,10 @@
     <div>
       The target CouchDB service must have "CORS" enabled.
     </div>
+    <h3>Getting started</h3>
+    <div>
+      Visit the <NuxtLink to="/settings">Settings</NuxtLink> page and enter the details 
+      of one or more CouchDB services.
+    </div>
   </v-container>
 </template>

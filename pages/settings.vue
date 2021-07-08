@@ -3,7 +3,10 @@
     <h1>Chaise</h1>
   
     <h2>Dashboard for Apache CouchDB</h2>
-    <div style="text-align: center" v-if="$store.state.session.services.length === 0">
+    <div class="about">
+      <NuxtLink to="/about">About Chaise</NuxtLink>
+    </div>
+    <div class="about" v-if="$store.state.session.services.length === 0">
       To get started, enter the details of the CouchDB services that you want to work with.
     </div>
 
@@ -42,6 +45,10 @@
   </v-container>
 </template>
 <style type="text/css">
+.about {
+  text-align: center;
+  margin-bottom: 15px;
+}
 h1 {
   font-size: 78px;
   font-weight: bold;
