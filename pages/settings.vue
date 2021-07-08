@@ -31,6 +31,9 @@
           Note that the service details are held in local storage in your browser - not in any
           centralised database.
         </div>
+        <v-alert type="error" v-if="newServiceError">
+          {{ newServiceError }}
+        </v-alert>
       </v-card-text>
       <v-card-actions>
         <v-btn color="success" @click="onSave">Save</v-btn>
@@ -67,6 +70,7 @@ h2 {
 <script>
 
 import localstorage from '~/assets/js/localstorage'
+import couch from '~/assets/js/couch'
 import kuuid from 'kuuid'
 
 export default {
@@ -81,7 +85,8 @@ export default {
       newServiceHost: '',
       newServiceUsername: '',
       newServicePassword: '',
-      newServiceReadOnly: false
+      newServiceReadOnly: false,
+      newServiceError: ''
     };
   },
   asyncData: async function ({ store }) {
@@ -98,7 +103,17 @@ export default {
       this.newServiceReadOnly = false
       this.showAddForm = true
     },
-    onSave: function () {
+    onSave: async function () {
+      this.newServiceError = ''
+      
+      // test the service 
+      const r = await couch.getSession(this.newServiceHost, this.newServiceUsername, this.newServicePassword)
+      if (!r) {
+        this.newServiceError = 'Failed to authenticate - please check credentials and make sure CORS is enabled'
+        return
+      }
+
+      // save the service in local storage
       const newService = {
         id: kuuid.ids(),
         name: this.newServiceName,

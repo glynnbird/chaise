@@ -9,6 +9,9 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <!-- add document icon -->
+      <v-chip v-if="$store.state.session.currentService.readonly">
+        Read only
+      </v-chip>
       <v-btn nuxt to="/doc_add" icon v-if="!$store.state.session.currentService.readonly && $store.state.cache.currentDB && !$store.state.cache.currentID">
         <v-icon>mdi-file-plus</v-icon>
       </v-btn>

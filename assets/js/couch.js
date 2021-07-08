@@ -5,9 +5,8 @@ const request = async function (store, method, url, params, data) {
   const req = {
     method: method,
     baseURL: store.state.session.currentService.host,
-    auth: {
-      username: store.state.session.currentService.username,
-      password: store.state.session.currentService.password
+    validateStatus: function () {
+      return true // always resolve the promise
     },
     url: url,
     params: params,
@@ -15,7 +14,25 @@ const request = async function (store, method, url, params, data) {
     withCredentials: true
   }
   try {
-    const response = await axios(req)
+    // try the request once
+    let response = await axios(req)
+
+    // if authentication failed, it means we have no cookie or a stale one
+    if (response.status === 401) {
+      // get a new cookie
+      console.log('401 - getting new session')
+      const authResponse = await couch.getSession(store.state.session.currentService.host, store.state.session.currentService.username, store.state.session.currentService.password)
+
+      // if that worked - retry the request
+      if (authResponse) {
+        response = await axios(req)
+      }
+    }
+
+    // throw error for bad status codes
+    if (response.status > 300) {
+      throw new Error(response)
+    }
     return response.data
   } catch (e) {
     console.error(e)
@@ -25,6 +42,24 @@ const request = async function (store, method, url, params, data) {
 
 // a subset of the CouchDB API
 const couch = {
+  getSession: async function (url, username, password) {
+    const req = {
+      method: 'post',
+      baseURL: url,
+      url: '/_session',
+      data: {
+        name: username,
+        password: password
+      },
+      withCredentials: true
+    }
+    try {
+      const response = await axios(req)
+      return response
+    } catch (e) {
+      return null
+    }
+  },
   loadDbs: async function (store) {
     return await request(store, 'get', '/_all_dbs', {}, undefined)
   },
