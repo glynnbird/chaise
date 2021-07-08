@@ -20,6 +20,11 @@ export default {
     ]
   },
 
+  // generate 404.html page so that hard refreshes work on GitHub pages
+  generate: {
+    fallback: '404.html'
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '~/assets/css/style.css'
