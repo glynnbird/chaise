@@ -13,6 +13,15 @@ const request = async function (store, method, url, params, data) {
     data: data,
     withCredentials: true
   }
+
+  // if this is http://localhost....  then we need to fall back to basic auth
+  if (store.state.session.currentService.host.startsWith('http://localhost')) {
+    req.auth = {
+      username: store.state.session.currentService.username,
+      password: store.state.session.currentService.password
+    }
+  }
+
   try {
     // try the request once
     let response = await axios(req)

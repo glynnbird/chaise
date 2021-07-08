@@ -36,7 +36,7 @@
         </v-alert>
       </v-card-text>
       <v-card-actions>
-        <v-btn color="success" @click="onSave">Save</v-btn>
+        <v-btn color="success" @click="onSave" :disabled="onSaveDisabled">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-container>
@@ -97,7 +97,7 @@ export default {
   methods: {
     revealAddForm: function () {
       this.newServiceName = ''
-      this.newServiceHost = ''
+      this.newServiceHost = 'https://'
       this.newServiceUsername = ''
       this.newServicePassword = ''
       this.newServiceReadOnly = false
@@ -105,7 +105,7 @@ export default {
     },
     onSave: async function () {
       this.newServiceError = ''
-      
+
       // test the service 
       const r = await couch.getSession(this.newServiceHost, this.newServiceUsername, this.newServicePassword)
       if (!r) {
@@ -144,6 +144,17 @@ export default {
         this.$store.commit('session/currentService', null)
       }
       this.$store.commit('session/deleteService', id)
+    }
+  },
+  computed: {
+    onSaveDisabled: function() {
+      if (!this.newServiceName ||
+          !this.newServiceHost ||
+          !this.newServiceUsername ||
+          !this.newServicePassword) {
+            return true
+          }
+      return false
     }
   }
 }
