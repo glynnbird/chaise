@@ -1,6 +1,5 @@
 <template>
   <v-container>
-
     <h1>Chaise</h1>
   
     <h2>Dashboard for Apache CouchDB</h2>

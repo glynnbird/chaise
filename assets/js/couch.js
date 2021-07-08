@@ -1,189 +1,76 @@
 const { default: axios } = require('axios')
 
+// make an HTTP request to the currently selected service
+const request = async function (store, method, url, params, data) {
+  const req = {
+    method: method,
+    baseURL: store.state.session.currentService.host,
+    auth: {
+      username: store.state.session.currentService.username,
+      password: store.state.session.currentService.password
+    },
+    url: url,
+    params: params,
+    data: data,
+    withCredentials: true
+  }
+  try {
+    const response = await axios(req)
+    return response.data
+  } catch (e) {
+    console.error(e)
+    return null
+  }
+}
+
+// a subset of the CouchDB API
 const couch = {
   loadDbs: async function (store) {
-    const req = {
-      method: 'get',
-      baseURL: store.state.session.currentService.host,
-      auth: {
-        username: store.state.session.currentService.username,
-        password: store.state.session.currentService.password
-      },
-      url: '/_all_dbs',
-      withCredentials: true
-    }
-    try {
-      const response = await axios(req)
-      return response.data
-    } catch (e) {
-      console.error(e)
-      return null
-    }
+    return await request(store, 'get', '/_all_dbs', {}, undefined)
   },
   getDBInfo: async function (store, db) {
-    const req = {
-      method: 'get',
-      baseURL: store.state.session.currentService.host,
-      auth: {
-        username: store.state.session.currentService.username,
-        password: store.state.session.currentService.password
-      },
-      url: '/' + encodeURIComponent(db),
-      withCredentials: true
-    }
-    try {
-      const response = await axios(req)
-      return response.data
-    } catch (e) {
-      console.error(e)
-      return null
-    }
+    const url = `/${encodeURIComponent(db)}`
+    return await request(store, 'get', url, {}, undefined)
   },
   getDocs: async function (store, db, prefix, page) {
     if (!page) {
       page = 1
     }
-    const req = {
-      method: 'get',
-      baseURL: store.state.session.currentService.host,
-      auth: {
-        username: store.state.session.currentService.username,
-        password: store.state.session.currentService.password
-      },
-      url: '/' + encodeURIComponent(db) + '/_all_docs',
-      params: {
-        include_docs: true,
-        skip: (page - 1) * 20,
-        limit: 20
-      },
-      withCredentials: true
+    const url = `/${encodeURIComponent(db)}/_all_docs`
+    const params = {
+      include_docs: true,
+      skip: (page - 1) * 20,
+      limit: 20
     }
     if (prefix) {
-      req.params.startkey = JSON.stringify(prefix)
-      req.params.endkey = JSON.stringify(prefix + 'z')
+      params.startkey = JSON.stringify(prefix)
+      params.endkey = JSON.stringify(prefix + 'z')
     }
-    try {
-      const response = await axios(req)
-      return response.data
-    } catch (e) {
-      return null
-    }
+    return await request(store, 'get', url, params, undefined)
   },
   getDoc: async function (store, db, id) {
-    const req = {
-      method: 'get',
-      baseURL: store.state.session.currentService.host,
-      auth: {
-        username: store.state.session.currentService.username,
-        password: store.state.session.currentService.password
-      },
-      url: '/' + encodeURIComponent(db) + '/' + encodeURIComponent(id),
-      withCredentials: true
-    }
-    try {
-      const response = await axios(req)
-      return response.data
-    } catch (e) {
-      return null
-    }
+    const url = `/${encodeURIComponent(db)}/${id}`
+    return await request(store, 'get', url, {}, undefined)
   },
   putDB: async function (store, db, options) {
-    const req = {
-      method: 'put',
-      baseURL: store.state.session.currentService.host,
-      auth: {
-        username: store.state.session.currentService.username,
-        password: store.state.session.currentService.password
-      },
-      params: options || {},
-      url: '/' + encodeURIComponent(db),
-      withCredentials: true
-    }
-    try {
-      const response = await axios(req)
-      return response.data
-    } catch (e) {
-      return null
-    }
+    const url = `/${encodeURIComponent(db)}`
+    return await request(store, 'put', url, options, undefined)
   },
   putDoc: async function (store, db, doc) {
-    const req = {
-      method: 'post',
-      baseURL: store.state.session.currentService.host,
-      auth: {
-        username: store.state.session.currentService.username,
-        password: store.state.session.currentService.password
-      },
-      data: doc,
-      url: '/' + encodeURIComponent(db),
-      withCredentials: true
-    }
-    try {
-      const response = await axios(req)
-      return response.data
-    } catch (e) {
-      return null
-    }
+    const url = `/${encodeURIComponent(db)}`
+    return await request(store, 'put', url, {}, doc)
   },
   deleteDoc: async function (store, db, doc) {
-    const req = {
-      method: 'delete',
-      baseURL: store.state.session.currentService.host,
-      auth: {
-        username: store.state.session.currentService.username,
-        password: store.state.session.currentService.password
-      },
-      data: doc,
-      url: `/${encodeURIComponent(db)}/${doc._id}`,
-      params: {
-        rev: doc._rev
-      },
-      withCredentials: true
-    }
-    try {
-      const response = await axios(req)
-      return response.data
-    } catch (e) {
-      return null
-    }
+    const url = `/${encodeURIComponent(db)}/${doc._id}`
+    return await request(store, 'delete', url, { rev: doc._rev }, undefined)
   },
   explain: async function (store, db, query) {
-    const req = {
-      method: 'post',
-      baseURL: store.state.session.currentService.host,
-      auth: {
-        username: store.state.session.currentService.username,
-        password: store.state.session.currentService.password
-      },
-      data: query,
-      url: `/${encodeURIComponent(db)}/_explain`,
-      withCredentials: true
-    }
-    try {
-      const response = await axios(req)
-      return response.data
-    } catch (e) {
-      return null
-    }
+    const url = `/${encodeURIComponent(db)}/_explain`
+    return await request(store, 'post', url, { }, query)
   },
   find: async function (store, db, query) {
-    const req = {
-      method: 'post',
-      baseURL: store.state.session.currentService.host,
-      auth: {
-        username: store.state.session.currentService.username,
-        password: store.state.session.currentService.password
-      },
-      data: query,
-      url: `/${encodeURIComponent(db)}/_find`,
-      withCredentials: true
-    }
-    try {
-      const response = await axios(req)
-      return response.data
-    } catch (e) {
-      return null
-    }
+    const url = `/${encodeURIComponent(db)}/_find`
+    return await request(store, 'post', url, { }, query)
   }
 }
 
