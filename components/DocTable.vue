@@ -32,7 +32,7 @@ export default {
       for(const doc of this.docs) {
         for(const k of Object.keys(doc)) {
           const t = typeof doc[k]
-          if (k !== '_rev' && t !== 'object') {
+          if (k !== '_rev') {
             if (t !== 'string' || doc[k].length > 0) {
               uniqueKeys.add(k)
             }
@@ -47,7 +47,12 @@ export default {
       for(const doc of this.docs) {
         const obj = JSON.parse(JSON.stringify(doc))
         for(const k of Object.keys(obj)) {
-          if (k !== '_id' && typeof obj[k] === 'string' && obj[k].length > 20) {
+          let t = typeof obj[k]
+          if (t === 'object') {
+            obj[k] = JSON.stringify(obj[k])
+            t = 'string'
+          }
+          if (k !== '_id' && t === 'string' && obj[k].length > 20) {
             obj[k] = obj[k].substr(0, 20) + '...'
           }
         }
