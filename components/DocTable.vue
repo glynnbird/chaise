@@ -11,6 +11,7 @@
   ></v-data-table>
 </template>
 <script>
+import pathmagic from '~/assets/js/pathmagic'
 export default {
   props: ['docs', 'dbName', 'showDoc'],
   data: function () {
@@ -20,9 +21,7 @@ export default {
   },
   methods: {
     onClickDoc: async function (doc) {
-      const db = encodeURIComponent(this.dbName)
-      const id = encodeURIComponent(doc._id)
-      this.$router.push(`/db/${db}/${id}`)
+      this.$router.push(pathmagic.doc(this.dbName, doc._id))
     }
   },
   computed: {

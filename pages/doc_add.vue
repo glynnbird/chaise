@@ -27,8 +27,9 @@
 
 <script>
 
-import couch from "~/assets/js/couch"
-import kuuid from "kuuid"
+import couch from '~/assets/js/couch'
+import pathmagic from '~/assets/js/pathmagic'
+import kuuid from 'kuuid'
 
 export default {
   data: function () {
@@ -73,13 +74,13 @@ export default {
       }
     },
     onSave: async function () {
-      const response = await couch.putDoc(this.$store, this.dbName, this.doc)
+      const response = await couch.postDoc(this.$store, this.dbName, this.doc)
       if (response && response.ok) {
         this.$store.commit('alert/insertAlert', {
           alertType: 'success',
           alertMessage: 'Successfully added document'
         });
-        this.$router.push(`/db/${this.dbName}/${encodeURIComponent(this.doc._id)}`)
+        this.$router.push(pathmagic.doc(this.dbName, this.doc._id))
       } else {
         this.$store.commit('alert/insertAlert', {
           alertMessage: 'Failed to add document'

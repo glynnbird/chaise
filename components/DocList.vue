@@ -19,13 +19,12 @@
   </v-list>
 </template>
 <script>
+import pathmagic from '~/assets/js/pathmagic'
 export default {
   props: ['docs', 'dbName', 'showDoc'],
   methods: {
     onClickDoc: async function (id) {
-      const db = encodeURIComponent(this.dbName)
-      id = encodeURIComponent(id)
-      this.$router.push(`/db/${encodeURIComponent(this.dbName)}/${id}`)
+      this.$router.push(pathmagic.doc(this.dbName, id))
     }
   }
 }

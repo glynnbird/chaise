@@ -35,7 +35,8 @@
 </template>
 
 <script>
-import couch from "~/assets/js/couch"
+import couch from '~/assets/js/couch'
+import pathmagic from '~/assets/js/pathmagic'
 
 export default {
   data: function () {
@@ -62,7 +63,7 @@ export default {
           alertMessage: 'Database added',
           alertType: 'success'
         });
-        this.$router.push(`/db/${encodeURIComponent(this.name)}`)
+        this.$router.push(pathmagic.db(this.name))
       } else {
         this.$store.commit('alert/insertAlert', {
           alertMessage: 'Failed to add database'

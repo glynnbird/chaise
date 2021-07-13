@@ -21,6 +21,8 @@ a.nuxt-link-exact-active {
 }
 </style>
 <script>
+import pathmagic from '~/assets/js/pathmagic'
+
 export default {
   props: [ 'title' ],
   data: function () {
@@ -31,21 +33,18 @@ export default {
   computed: {
     items: function () {
       const retval = []
-      let name
       // if we know the db we're dealing with
       if (this.$store.state.cache.currentDB) {
-        name = encodeURIComponent(this.$store.state.cache.currentDB)
         retval.push({
-          to: `/db/${name}`,
-          text: name,
+          to: pathmagic.db(this.$store.state.cache.currentDB),
+          text: this.$store.state.cache.currentDB,
           //icon: 'mdi-database'
         })
       }
       // if we know the document we're dealing with
       if (this.$store.state.cache.currentID) {
-        const id = encodeURIComponent(this.$store.state.cache.currentID)
         retval.push({ 
-          to: `/db/${name}/${id}`,
+          to: pathmagic.doc(this.$store.state.cache.currentDB, this.$store.state.cache.currentID),
           text: this.$store.state.cache.currentID,
           //icon: 'mdi-file-document'
         })

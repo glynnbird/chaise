@@ -34,7 +34,8 @@
 
 <script>
 
-import couch from "~/assets/js/couch"
+import couch from '~/assets/js/couch'
+import pathmagic from '~/assets/js/pathmagic'
 
 export default {
   data: function () {
@@ -100,7 +101,7 @@ export default {
   },
   methods: {
     onSave: async function () {
-      const response = await couch.putDoc(this.$store, this.dbName, this.doc)
+      const response = await couch.postDoc(this.$store, this.dbName, this.doc)
       if (response && response.ok) {
         this.doc._rev = response.rev
         this.originalJson = JSON.stringify(this.doc)
@@ -125,7 +126,7 @@ export default {
           alertType: 'success',
           alertMessage: 'Document deleted'
         });
-        this.$router.push(`/db/${encodeURIComponent(this.dbName)}`)
+        this.$router.push(pathmagic.db(this.dbName))
       } else {
         this.$store.commit('alert/insertAlert', {
           alertMessage: 'Failed to delete document'

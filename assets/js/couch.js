@@ -100,9 +100,9 @@ const couch = {
     const url = `/${encodeURIComponent(db)}`
     return await request(store, 'put', url, options, undefined)
   },
-  putDoc: async function (store, db, doc) {
+  postDoc: async function (store, db, doc) {
     const url = `/${encodeURIComponent(db)}`
-    return await request(store, 'put', url, {}, doc)
+    return await request(store, 'post', url, {}, doc)
   },
   deleteDoc: async function (store, db, doc) {
     const url = `/${encodeURIComponent(db)}/${doc._id}`

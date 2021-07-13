@@ -29,7 +29,8 @@
 
 <script>
 
-import couch from "~/assets/js/couch"
+import couch from '~/assets/js/couch'
+import pathmagic from '~/assets/js/pathmagic'
 
 export default {
   data: function () {
@@ -48,7 +49,7 @@ export default {
   },
   methods: {
     onClickDB: async function (db) {
-      this.$router.push(`/db/${encodeURIComponent(db)}`)
+      this.$router.push(pathmagic.db(db))
     }
   },
   computed: {

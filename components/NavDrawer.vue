@@ -64,7 +64,7 @@
 </template>
 
 <script>
-
+import pathmagic from '~/assets/js/pathmagic'
 
 export default {
   data: function () {
@@ -80,7 +80,7 @@ export default {
   },
   methods: {
     chooseRecent: function (db) {
-      this.$router.push('/db/' + encodeURIComponent(db))
+      this.$router.push(pathmagic.db(db))
     },
     onHome: function () {
       this.$router.push('/')
